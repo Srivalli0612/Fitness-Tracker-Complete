@@ -4,19 +4,19 @@ A full-stack web application that helps users manage their fitness journey by tr
 
 ---
 
-## 🚀 Features
+##  Features
 
-* 🔐 User Authentication (Register & Login)
-* 👤 User Profile Management (Age, Height, Weight)
-* 📏 BMI Calculator with smart recommendations
-* 🥗 Diet Plan Tracking (daily calories)
-* 🏋️ Workout Plan Tracking (calories burned)
-* 🔥 Daily Calorie Balance (consumed vs burned)
-* 📈 Progress Dashboard
+* User Authentication (Register & Login)
+* User Profile Management (Age, Height, Weight)
+* BMI Calculator with smart recommendations
+* Diet Plan Tracking (daily calories)
+* Workout Plan Tracking (calories burned)
+* Daily Calorie Balance (consumed vs burned)
+* Progress Dashboard
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 ### Frontend:
 
@@ -49,7 +49,7 @@ fitness-tracker/
 
 ### 🔹 Clone the repository
 
-git clone https://github.com/YOUR_USERNAME/Fitness-Tracker-Complete.git
+git clone https://github.com/Srivalli0612/Fitness-Tracker-Complete.git
 cd Fitness-Tracker-Complete
 
 ---
@@ -93,13 +93,8 @@ npm run dev
 
 ---
 
-## 📸 Screenshots
 
-(Add screenshots here later)
-
----
-
-## 🌟 Key Highlights
+##  Key Highlights
 
 * Full-stack integration (React + Django)
 * Real-time calorie tracking system
@@ -109,7 +104,7 @@ npm run dev
 
 ---
 
-## 🚀 Future Enhancements
+##  Future Enhancements
 
 * 🔹 AI-based workout & diet suggestions
 * 🔹 Mobile responsive UI improvements
