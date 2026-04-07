@@ -148,36 +148,52 @@ class ProgressView(APIView):
             "net_calories": calories_consumed - calories_burned
         })
     
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from Workouts.models import WorkoutTemplate
+from Diet.models import DietTemplate
+
 class BMIRecommendationView(APIView):
+
     def post(self, request):
-        height = float(request.data.get("height"))
-        weight = float(request.data.get("weight"))
+        try:
+            height = request.data.get("height")
+            weight = request.data.get("weight")
 
-        bmi = weight / (height * height)
+            # ✅ convert safely
+            height = float(height)
+            weight = float(weight)
 
-        if bmi < 18.5:
-            category = "Underweight"
-            workout = "Strength training, light cardio"
-            diet = "High calorie, protein-rich meals"
+            bmi = round(weight / (height * height), 2)
 
-        elif bmi < 25:
-            category = "Normal"
-            workout = "Balanced workouts (cardio + strength)"
-            diet = "Balanced diet"
 
-        elif bmi < 30:
-            category = "Overweight"
-            workout = "Cardio + fat-burning workouts"
-            diet = "Low calorie, low fat diet"
+            if bmi < 18.5:
+                category = "Underweight"
+                workouts = WorkoutTemplate.objects.filter(workout_type="Strength")[:3]
+                diets = DietTemplate.objects.filter(calories__gt=300)[:3]
 
-        else:
-            category = "Obese"
-            workout = "Daily cardio + light strength training"
-            diet = "Strict calorie deficit diet"
+            elif bmi < 24.9:
+                category = "Normal"
+                workouts = WorkoutTemplate.objects.all()[:3]
+                diets = DietTemplate.objects.all()[:3]
 
-        return Response({
-            "bmi": round(bmi, 2),
-            "category": category,
-            "workout_recommendation": workout,
-            "diet_recommendation": diet
-        })
+            elif bmi < 29.9:
+                category = "Overweight"
+                workouts = WorkoutTemplate.objects.filter(workout_type="Cardio")[:3]
+                diets = DietTemplate.objects.filter(calories__lt=300)[:3]
+
+            else:
+                category = "Obese"
+                workouts = WorkoutTemplate.objects.filter(workout_type="Cardio")[:3]
+                diets = DietTemplate.objects.filter(calories__lt=250)[:3]
+
+            return Response({
+                "bmi": bmi,
+                "category": category,
+                "workouts": list(workouts.values("title", "description")),
+                "diets": list(diets.values("title", "description"))
+            })
+
+        except Exception as e:
+            print("🔥 BMI ERROR:", e)
+            return Response({"error": str(e)}, status=500)
